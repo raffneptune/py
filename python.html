@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./raffneptune.jpg" type="image/x-icon" />
+    <title>Raff | Python</title>
+    <style>
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            position: relative;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Menghapus gaya default pada link */
+        a.custom-link {
+        text-decoration: none; /* Menghapus garis bawah */
+        color: inherit; /* Mengikuti warna teks parent */
+        }
+
+        /* Efek hover pada link */
+        a.custom-link:hover {
+        color: #007bff; /* Mengubah warna teks saat hover */
+        text-decoration: underline; /* Menambahkan garis bawah saat hover */
+        }
+    </style>
+</head>
+<body>
+
+<h1>Kumpulan Kode Python</h1>
+
+<h2>1. Absensi</h2>
+<pre><code class="code-block">
+# Program Absensi Sederhana
+
+# Daftar nama siswa/pegawai
+daftar_nama = ["Ali", "Budi", "Citra", "Dewi", "Eka"]
+
+# Menyimpan data absensi
+absensi = {}
+
+# Fungsi untuk mencatat absensi
+def catat_absensi():
+    print("Daftar Nama:")
+    for i, nama in enumerate(daftar_nama, 1):
+        print(f"{i}. {nama}")
+
+    for nama in daftar_nama:
+        status = input(f"Apakah {nama} hadir? (y/n): ").strip().lower()
+        if status == 'y':
+            absensi[nama] = "Hadir"
+        elif status == 'n':
+            absensi[nama] = "Tidak Hadir"
+        else:
+            absensi[nama] = "Tidak Valid"
+    
+    print("\nAbsensi Hari Ini:")
+    for nama, status in absensi.items():
+        print(f"{nama}: {status}")
+
+# Memulai pencatatan absensi
+catat_absensi()
+</code></pre>
+
+<h2>2. Barbershop</h2>
+<pre><code class="code-block">
+import time
+
+class Barbershop:
+    def __init__(self):
+        self.queue = []  # Antrian pelanggan
+        self.is_open = True  # Status barbershop
+    
+    def buka_barbershop(self):
+        print("Barbershop sedang buka, silakan masuk!")
+    
+    def tutup_barbershop(self):
+        self.is_open = False
+        print("Barbershop sudah tutup. Terima kasih sudah datang!")
+    
+    def tambah_pelanggan(self, nama):
+        if self.is_open:
+            self.queue.append(nama)
+            print(f"{nama} telah masuk ke antrian.")
+        else:
+            print("Barbershop sudah tutup. Anda tidak bisa mendaftar.")
+    
+    def proses_pelanggan(self):
+        if self.queue:
+            pelanggan = self.queue.pop(0)
+            print(f"Sedang melayani {pelanggan}...")
+            time.sleep(2)  # Simulasi waktu pemotongan rambut
+            print(f"{pelanggan} telah selesai dilayani.")
+        else:
+            print("Tidak ada pelanggan di antrian.")
+    
+    def tampilkan_antrian(self):
+        if self.queue:
+            print("Antrian pelanggan:")
+            for i, pelanggan in enumerate(self.queue, start=1):
+                print(f"{i}. {pelanggan}")
+        else:
+            print("Tidak ada pelanggan di antrian.")
+    
+def main():
+    barbershop = Barbershop()
+    barbershop.buka_barbershop()
+    
+    while True:
+        print("\n--- Menu ---")
+        print("1. Tambah Pelanggan")
+        print("2. Proses Pelanggan")
+        print("3. Lihat Antrian")
+        print("4. Tutup Barbershop")
+        print("5. Keluar")
+        
+        pilihan = input("Pilih menu (1-5): ")
+        
+        if pilihan == '1':
+            nama = input("Masukkan nama pelanggan: ")
+            barbershop.tambah_pelanggan(nama)
+        
+        elif pilihan == '2':
+            barbershop.proses_pelanggan()
+        
+        elif pilihan == '3':
+            barbershop.tampilkan_antrian()
+        
+        elif pilihan == '4':
+            barbershop.tutup_barbershop()
+            break
+        
+        elif pilihan == '5':
+            print("Terima kasih telah menggunakan program ini!")
+            break
+        
+        else:
+            print("Pilihan tidak valid, coba lagi.")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+<h2>3. Bioskop</h2>
+<pre><code class="code-block">
+# Daftar film yang tersedia di bioskop
+films = {
+    1: {"judul": "Film A", "harga": 50000},
+    2: {"judul": "Film B", "harga": 60000},
+    3: {"judul": "Film C", "harga": 70000},
+    4: {"judul": "Film D", "harga": 55000}
+}
+
+def show_films():
+    print("Daftar Film yang Tersedia:")
+    for key, value in films.items():
+        print(f"{key}. {value['judul']} - Harga: Rp {value['harga']}")
+
+def pilih_film():
+    while True:
+        try:
+            pilihan = int(input("\nPilih film (1-4): "))
+            if pilihan in films:
+                return pilihan
+            else:
+                print("Pilihan tidak valid, coba lagi.")
+        except ValueError:
+            print("Masukkan angka yang valid.")
+
+def beli_tiket():
+    show_films()
+    pilihan = pilih_film()
+    jumlah_tiket = int(input("Masukkan jumlah tiket yang ingin dibeli: "))
+    
+    film_terpilih = films[pilihan]
+    total_harga = film_terpilih["harga"] * jumlah_tiket
+    
+    print(f"\nTiket untuk film {film_terpilih['judul']} ({jumlah_tiket} tiket) berhasil dipesan.")
+    print(f"Total harga: Rp {total_harga}")
+    
+    lagi = input("\nApakah Anda ingin membeli tiket lagi? (ya/tidak): ").strip().lower()
+    if lagi == 'ya':
+        beli_tiket()
+    else:
+        print("Terima kasih telah membeli tiket di bioskop kami!")
+
+# Mulai program
+beli_tiket()
+</code></pre>
+
+<h2>4. Dealer Kartu (Black Jack Simplified)</h2>
+<pre><code class="code-block">
+import random
+
+# Daftar kartu yang ada di dalam deck
+deck = [
+    '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'
+] * 4  # Empat set kartu untuk deck standar
+
+# Fungsi untuk menghitung nilai kartu
+def card_value(card):
+    if card in ['J', 'Q', 'K']:
+        return 10
+    elif card == 'A':
+        return 11  # Untuk kesederhanaan, kita anggap Ace = 11, tidak memikirkan kemungkinan Ace = 1
+    else:
+        return int(card)
+
+# Fungsi untuk membagikan kartu
+def deal_card():
+    card = random.choice(deck)
+    deck.remove(card)  # Menghapus kartu yang sudah dibagikan dari deck
+    return card
+
+# Fungsi untuk menghitung nilai total kartu
+def calculate_hand(hand):
+    total = sum(card_value(card) for card in hand)
+    return total
+
+# Fungsi untuk bermain game sederhana
+def start_game():
+    print("Selamat datang di permainan Dealer Kartu!")
+
+    # Membagikan dua kartu untuk pemain dan dealer
+    player_hand = [deal_card(), deal_card()]
+    dealer_hand = [deal_card(), deal_card()]
+
+    # Menampilkan kartu pemain dan satu kartu dealer
+    print(f"Kartu Anda: {player_hand} dengan nilai {calculate_hand(player_hand)}")
+    print(f"Kartu Dealer: {dealer_hand[0]} dan kartu tersembunyi")
+
+    # Giliran pemain
+    while calculate_hand(player_hand) < 21:
+        action = input("Apakah Anda ingin 'Hit' atau 'Stand'? ").lower()
+        if action == 'hit':
+            player_hand.append(deal_card())
+            print(f"Kartu Anda sekarang: {player_hand} dengan nilai {calculate_hand(player_hand)}")
+        elif action == 'stand':
+            break
+        else:
+            print("Pilihan tidak valid. Pilih 'Hit' atau 'Stand'.")
+
+    # Cek apakah pemain melebihi 21
+    if calculate_hand(player_hand) > 21:
+        print(f"Nilai kartu Anda melebihi 21! Anda kalah!")
+        return
+
+    # Giliran dealer (dealer harus 'hit' sampai total nilai kartu >= 17)
+    print(f"Kartu Dealer sekarang: {dealer_hand} dengan nilai {calculate_hand(dealer_hand)}")
+    while calculate_hand(dealer_hand) < 17:
+        print("Dealer memukul kartu...")
+        dealer_hand.append(deal_card())
+        print(f"Kartu Dealer sekarang: {dealer_hand} dengan nilai {calculate_hand(dealer_hand)}")
+
+    # Tentukan pemenang
+    player_total = calculate_hand(player_hand)
+    dealer_total = calculate_hand(dealer_hand)
+
+    if dealer_total > 21:
+        print("Dealer melebihi 21! Anda menang!")
+    elif player_total > dealer_total:
+        print("Anda menang!")
+    elif player_total < dealer_total:
+        print("Dealer menang!")
+    else:
+        print("Hasil seri!")
+
+# Memulai permainan
+start_game()
+</code></pre>
+
+<h2>5. Diler Kendaraan</h2>
+<pre><code class="code-block">
+class Vehicle:
+    def __init__(self, model, price, stock):
+        self.model = model
+        self.price = price
+        self.stock = stock
+
+    def display_info(self):
+        print(f"Model: {self.model}, Harga: Rp{self.price}, Stok: {self.stock}")
+
+    def update_stock(self, quantity):
+        self.stock -= quantity
+        if self.stock < 0:
+            self.stock = 0
+
+    def is_available(self, quantity):
+        return self.stock >= quantity
+
+
+class VehicleDealer:
+    def __init__(self):
+        self.vehicles = []
+
+    def add_vehicle(self, model, price, stock):
+        vehicle = Vehicle(model, price, stock)
+        self.vehicles.append(vehicle)
+
+    def display_vehicles(self):
+        if not self.vehicles:
+            print("Tidak ada kendaraan di diler.")
+            return
+        print("\nKendaraan yang Tersedia di Diler:")
+        for idx, vehicle in enumerate(self.vehicles, 1):
+            print(f"{idx}. ", end="")
+            vehicle.display_info()
+
+    def purchase_vehicle(self):
+        self.display_vehicles()
+        if not self.vehicles:
+            return
+
+        try:
+            choice = int(input("\nPilih kendaraan (masukkan nomor): "))
+            quantity = int(input("Berapa banyak yang ingin dibeli? "))
+            
+            selected_vehicle = self.vehicles[choice - 1]
+            if selected_vehicle.is_available(quantity):
+                total_price = selected_vehicle.price * quantity
+                print(f"\nPembelian Sukses! Total Harga: Rp{total_price}")
+                selected_vehicle.update_stock(quantity)
+            else:
+                print("\nStok tidak cukup.")
+        except (ValueError, IndexError):
+            print("\nPilihan tidak valid.")
+
+def main():
+    dealer = VehicleDealer()
+
+    # Menambahkan beberapa kendaraan ke diler
+    dealer.add_vehicle("Mobil Sedan", 300000000, 10)
+    dealer.add_vehicle("Motor Sport", 100000000, 5)
+    dealer.add_vehicle("Mobil SUV", 500000000, 3)
+
+    while True:
+        print("\n--- Menu Diler Kendaraan ---")
+        print("1. Lihat kendaraan yang tersedia")
+        print("2. Pembelian kendaraan")
+        print("3. Keluar")
+        
+        try:
+            choice = int(input("\nPilih menu: "))
+            
+            if choice == 1:
+                dealer.display_vehicles()
+            elif choice == 2:
+                dealer.purchase_vehicle()
+            elif choice == 3:
+                print("Terima kasih telah mengunjungi diler kami!")
+                break
+            else:
+                print("\nPilihan tidak valid.")
+        except ValueError:
+            print("\nMasukkan angka yang valid.")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+<h2>6. Gaji</h2>
+<pre><code class="code-block">
+def hitung_gaji_pokok(gaji_pokok, tunjangan, potongan):
+    gaji_total = gaji_pokok + tunjangan - potongan
+    return gaji_total
+
+def main():
+    print("Program Perhitungan Gaji Karyawan")
+    
+    # Input data
+    gaji_pokok = float(input("Masukkan gaji pokok: Rp "))
+    tunjangan = float(input("Masukkan tunjangan: Rp "))
+    potongan = float(input("Masukkan potongan: Rp "))
+    
+    # Menghitung gaji total
+    gaji_total = hitung_gaji_pokok(gaji_pokok, tunjangan, potongan)
+    
+    # Menampilkan hasil
+    print("\nRingkasan Gaji:")
+    print(f"Gaji Pokok: Rp {gaji_pokok}")
+    print(f"Tunjangan: Rp {tunjangan}")
+    print(f"Potongan: Rp {potongan}")
+    print(f"Gaji Total: Rp {gaji_total}")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+<h2>7. Kafe</h2>
+<pre><code class="code-block">
+class Cafe:
+    def __init__(self):
+        self.menu = {
+            "Kopi": 15000,
+            "Teh": 10000,
+            "Espresso": 20000,
+            "Cappuccino": 25000,
+            "Kue": 12000
+        }
+        self.pesanan = {}
+
+    def tampilkan_menu(self):
+        print("\n--- Menu Kafe ---")
+        for item, harga in self.menu.items():
+            print(f"{item}: Rp {harga}")
+
+    def tambah_pesanan(self):
+        while True:
+            self.tampilkan_menu()
+            pesanan = input("\nMasukkan nama item yang ingin dipesan (ketik 'selesai' untuk mengakhiri): ").capitalize()
+            if pesanan == 'Selesai':
+                break
+            elif pesanan in self.menu:
+                jumlah = int(input(f"Berapa banyak {pesanan} yang ingin dipesan? "))
+                if pesanan in self.pesanan:
+                    self.pesanan[pesanan] += jumlah
+                else:
+                    self.pesanan[pesanan] = jumlah
+                print(f"{jumlah} {pesanan} telah ditambahkan ke pesanan.")
+            else:
+                print("Item tidak ada dalam menu. Silakan coba lagi.")
+    
+    def hitung_total(self):
+        total = 0
+        for item, jumlah in self.pesanan.items():
+            total += self.menu[item] * jumlah
+        return total
+    
+    def tampilkan_pesanan(self):
+        if not self.pesanan:
+            print("\nTidak ada pesanan.")
+        else:
+            print("\n--- Pesanan Anda ---")
+            for item, jumlah in self.pesanan.items():
+                print(f"{item} x {jumlah} = Rp {self.menu[item] * jumlah}")
+            print(f"\nTotal yang harus dibayar: Rp {self.hitung_total()}")
+
+def main():
+    cafe = Cafe()
+    while True:
+        print("\n--- Selamat Datang di Kafe! ---")
+        print("1. Lihat Menu")
+        print("2. Tambah Pesanan")
+        print("3. Lihat Pesanan dan Total")
+        print("4. Keluar")
+        
+        pilihan = input("Pilih menu (1-4): ")
+
+        if pilihan == "1":
+            cafe.tampilkan_menu()
+        elif pilihan == "2":
+            cafe.tambah_pesanan()
+        elif pilihan == "3":
+            cafe.tampilkan_pesanan()
+        elif pilihan == "4":
+            print("Terima kasih telah mengunjungi kafe kami. Sampai jumpa!")
+            break
+        else:
+            print("Pilihan tidak valid. Silakan coba lagi.")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+<h2>8. Kalkulator</h2>
+<pre><code class="code-block">
+# Fungsi untuk penjumlahan
+def tambah(x, y):
+    return x + y
+
+# Fungsi untuk pengurangan
+def kurang(x, y):
+    return x - y
+
+# Fungsi untuk perkalian
+def kali(x, y):
+    return x * y
+
+# Fungsi untuk pembagian
+def bagi(x, y):
+    if y != 0:
+        return x / y
+    else:
+        return "Tidak bisa membagi dengan nol"
+
+# Menu utama
+def main():
+    print("Pilih operasi:")
+    print("1. Tambah")
+    print("2. Kurang")
+    print("3. Kali")
+    print("4. Bagi")
+    
+    # Meminta input dari pengguna
+    pilihan = input("Masukkan pilihan (1/2/3/4): ")
+    
+    if pilihan in ['1', '2', '3', '4']:
+        num1 = float(input("Masukkan angka pertama: "))
+        num2 = float(input("Masukkan angka kedua: "))
+        
+        if pilihan == '1':
+            print(f"{num1} + {num2} = {tambah(num1, num2)}")
+        elif pilihan == '2':
+            print(f"{num1} - {num2} = {kurang(num1, num2)}")
+        elif pilihan == '3':
+            print(f"{num1} * {num2} = {kali(num1, num2)}")
+        elif pilihan == '4':
+            print(f"{num1} / {num2} = {bagi(num1, num2)}")
+    else:
+        print("Pilihan tidak valid!")
+
+# Menjalankan program
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+<h2>9. Kasir</h2>
+<pre><code class="code-block">
+class Kasir:
+    def __init__(self):
+        self.daftar_barang = []
+        self.total_harga = 0
+
+    def tambah_barang(self, nama_barang, harga, jumlah):
+        barang = {
+            'nama': nama_barang,
+            'harga': harga,
+            'jumlah': jumlah,
+            'total': harga * jumlah
+        }
+        self.daftar_barang.append(barang)
+        self.total_harga += barang['total']
+        print(f"{nama_barang} x{jumlah} ditambahkan ke daftar belanja.")
+
+    def tampilkan_rincian(self):
+        print("\n--- Rincian Belanja ---")
+        for barang in self.daftar_barang:
+            print(f"{barang['nama']} - Harga: {barang['harga']} - Jumlah: {barang['jumlah']} - Total: {barang['total']}")
+        print(f"\nTotal Belanja: {self.total_harga}")
+
+    def bayar(self, uang_dibayar):
+        if uang_dibayar >= self.total_harga:
+            kembalian = uang_dibayar - self.total_harga
+            print(f"\nTotal yang harus dibayar: {self.total_harga}")
+            print(f"Uang yang dibayar: {uang_dibayar}")
+            print(f"Kembalian: {kembalian}")
+        else:
+            print("\nUang yang dibayar kurang dari total belanja. Transaksi dibatalkan.")
+
+# Program utama
+def main():
+    kasir = Kasir()
+
+    while True:
+        print("\nMenu Kasir")
+        print("1. Tambah barang")
+        print("2. Tampilkan rincian belanja")
+        print("3. Bayar")
+        print("4. Keluar")
+        
+        pilihan = input("Pilih menu (1/2/3/4): ")
+        
+        if pilihan == '1':
+            nama_barang = input("Masukkan nama barang: ")
+            harga = float(input("Masukkan harga barang: "))
+            jumlah = int(input("Masukkan jumlah barang: "))
+            kasir.tambah_barang(nama_barang, harga, jumlah)
+        
+        elif pilihan == '2':
+            kasir.tampilkan_rincian()
+        
+        elif pilihan == '3':
+            kasir.tampilkan_rincian()
+            uang_dibayar = float(input("Masukkan uang yang dibayar: "))
+            kasir.bayar(uang_dibayar)
+        
+        elif pilihan == '4':
+            print("Terima kasih, sampai jumpa!")
+            break
+        
+        else:
+            print("Pilihan tidak valid, coba lagi.")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+<h2>10. Kereta</h2>
+<pre><code class="code-block">
+class Kereta:
+    def __init__(self, nama_kereta, tujuan, waktu_berangkat, kapasitas):
+        self.nama_kereta = nama_kereta
+        self.tujuan = tujuan
+        self.waktu_berangkat = waktu_berangkat
+        self.kapasitas = kapasitas
+        self.terisi = 0
+
+    def tampilkan_info(self):
+        print(f"Nama Kereta: {self.nama_kereta}")
+        print(f"Tujuan: {self.tujuan}")
+        print(f"Waktu Berangkat: {self.waktu_berangkat}")
+        print(f"Kapasitas: {self.kapasitas}")
+        print(f"Terisi: {self.terisi}/{self.kapasitas}")
+        print("")
+
+    def pesan_tiket(self, jumlah_tiket):
+        if self.terisi + jumlah_tiket <= self.kapasitas:
+            self.terisi += jumlah_tiket
+            print(f"Berhasil memesan {jumlah_tiket} tiket untuk {self.nama_kereta}.")
+        else:
+            print(f"Maaf, hanya tersisa {self.kapasitas - self.terisi} tiket untuk {self.nama_kereta}.")
+
+class SistemKereta:
+    def __init__(self):
+        self.kereta_list = []
+
+    def tambah_kereta(self, kereta):
+        self.kereta_list.append(kereta)
+
+    def tampilkan_jadwal(self):
+        print("Jadwal Kereta:")
+        for kereta in self.kereta_list:
+            kereta.tampilkan_info()
+
+    def pesan_tiket_kereta(self, nama_kereta, jumlah_tiket):
+        for kereta in self.kereta_list:
+            if kereta.nama_kereta == nama_kereta:
+                kereta.pesan_tiket(jumlah_tiket)
+                return
+        print(f"Kereta dengan nama {nama_kereta} tidak ditemukan.")
+
+def main():
+    sistem_kereta = SistemKereta()
+
+    # Menambahkan kereta ke sistem
+    kereta1 = Kereta("Ekspres Jakarta", "Bandung", "10:00", 100)
+    kereta2 = Kereta("Argo Bromo", "Surabaya", "15:00", 150)
+    kereta3 = Kereta("Kelas Ekonomi", "Yogyakarta", "12:00", 200)
+
+    sistem_kereta.tambah_kereta(kereta1)
+    sistem_kereta.tambah_kereta(kereta2)
+    sistem_kereta.tambah_kereta(kereta3)
+
+    while True:
+        print("\nMenu:")
+        print("1. Tampilkan Jadwal Kereta")
+        print("2. Pesan Tiket Kereta")
+        print("3. Keluar")
+
+        pilihan = input("Pilih menu (1/2/3): ")
+
+        if pilihan == "1":
+            sistem_kereta.tampilkan_jadwal()
+        elif pilihan == "2":
+            nama_kereta = input("Masukkan nama kereta yang ingin dipesan: ")
+            jumlah_tiket = int(input("Masukkan jumlah tiket yang ingin dipesan: "))
+            sistem_kereta.pesan_tiket_kereta(nama_kereta, jumlah_tiket)
+        elif pilihan == "3":
+            print("Terima kasih telah menggunakan sistem kereta.")
+            break
+        else:
+            print("Pilihan tidak valid. Silakan coba lagi.")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+<h2>Mau Lebih Banyak Kode? Lihat Di Github Saya (Kode 11 - 20)</h2>
+<h2><a href="https://github.com/raffneptune/py" class="custom-link">Klik Disini</a>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("pre").forEach(pre => {
+            let button = document.createElement("button");
+            button.className = "copy-btn";
+            button.innerText = "Copy";
+            pre.style.position = "relative";
+            pre.appendChild(button);
+
+            button.addEventListener("click", () => {
+                let code = pre.querySelector("code").innerText;
+                navigator.clipboard.writeText(code).then(() => {
+                    button.innerText = "Copied!";
+                    setTimeout(() => { button.innerText = "Copy"; }, 2000);
+                }).catch(err => {
+                    console.error("Gagal menyalin kode: ", err);
+                });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
